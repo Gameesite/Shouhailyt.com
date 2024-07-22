@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    /* Global styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    /* Container styles */
+    .container {
+      max-width: 80%;
+      margin: 40px auto;
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Shape styles */
+    .shape {
+      width: 200px;
+      height: 100px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      position: relative;
+    }
+
+    .shape::before {
+      content: "هل تتقين في ❤️";
+      font-size: 36px;
+      color: #666;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* Button styles */
+    .button {
+      width: 100px;
+      height: 40px;
+      border: none;
+      border-radius: 10px;
+      background-color: #fff;
+      color: #333;
+      cursor: pointer;
+      margin: 10px;
+      transition: all 0.3s ease-in-out;
+      animation: rotate 2s infinite;
+    }
+
+    .button:hover {
+      background-color: #ccc;
+    }
+
+    .button:active {
+      background-color: #aaa;
+    }
+
+    /* Button variations */
+    .sky-blue-button {
+      background-image: linear-gradient(to bottom, #87ceeb, #add8e6);
+    }
+
+    .black-button {
+      background-image: linear-gradient(to bottom, #333, #444);
+      background-color: #333;
+      color: #fff;
+    }
+
+    .green-button {
+      background-image: linear-gradient(to bottom, #34c759, #2ecc71);
+    }
+
+    /* Animation styles */
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Popup styles */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    /* Close icon styles */
+    .close-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="shape">
+      هل تتقين في ❤️
+    </div>
+    <div class="buttons">
+      <button class="button sky-blue-button" id="yes-button">نعم</button>
+      <button class="button black-button" id="no-button">لا</button>
+      <button class="button green-button" id="idk-button">لا أعلم</button>
+    </div>
+    <div class="popup" id="yes-popup">
+      <p>شكرا لتقتك بي لم ولن تندمي ❤️😍🥰🎉🫂👊.</p>
+      <span class="close-icon" id="close-yes-popup">❌</span>
+    </div>
+    <div class="popup" id="no-popup">
+      <p>ألم تملي الضغط علي جربي إخوتي الأزرار الأخر ون 😭</p>
+      <span class="close-icon" id="close-no-popup">❌</span>
+    </div>
+        <div class="popup" id="idk-popup">
+      <p>إن لم تكوني تعلمين 🤔 فجربي الضغط على الزر نعم 😅.</p>
+      <button class="button green-button" id="back-button">العودة</button>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.button');
+    const popups = document.querySelectorAll('.popup');
+    const closeIcons = document.querySelectorAll('.close-icon');
+    const backButton = document.getElementById('back-button');
+    let noButtonClicked = 0;
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.id === 'yes-button') {
+          popups[0].classList.add('show');
+        } else if (button.id === 'no-button') {
+          noButtonClicked++;
+          button.style.position = 'absolute';
+          button.style.top = Math.random() * window.innerHeight + 'px';
+          button.style.left = Math.random() * window.innerWidth + 'px';
+
+          if (noButtonClicked >= 10) {
+            popups[1].style.display = 'block';
+            setTimeout(() => {
+              popups[1].style.display = 'none';
+            }, 10000);
+          }
+        } else if (button.id === 'idk-button') {
+          popups[2].classList.add('show');
+        }
+      });
+    });
+
+    closeIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        popups.forEach(popup => {
+          popup.classList.remove('show');
+        });
+      });
+    });
+
+    backButton.addEventListener('click', () => {
+      popups[2].classList.remove('show');
+    });
+  </script>
+</body>
+</html>
